@@ -1,0 +1,122 @@
+Oracle Database 11g Express Edition
+
+  Admin Login
+  ------------
+
+	 conn system/system
+
+	 conn / as sysdba
+
+  Creating and Giving Rights to user
+  -----------------------------------
+
+	 create user shruti identified by shruti175;
+
+	 grant connect,resource to shruti;
+
+
+ Dropping user if Exists
+ ------------------------
+
+	 drop user shruti cascade;
+
+
+
+Entering into Newuser Login
+----------------------------
+
+conn
+shruti
+shruti175
+
+
+//DOCTOR 
+create table doctor_details (
+id number(10) primary key,
+name varchar(32),
+email varchar2(32),
+password varchar2(32),
+mobile varchar2(10),
+address varchar2(32),
+qualification varchar2(32),
+gender varchar2(10),
+bloodgroup varchar2(32),
+dateofjoining varchar2(15)
+);
+
+//PATIENT
+create table patient(
+ID number not null,
+Name varchar2(30),
+Age number,
+Gender varchar2(6),
+Address varchar2(50),
+District varchar2(25),
+Ph_no varchar2(10),
+Bloodgrp varchar2(5),
+Appointment date,
+Symptoms varchar2(100),
+Doctor varchar2(30),
+CONSTRAINT patient_pk PRIMARY KEY(ID)
+);
+
+
+//DIAGNOSIS
+create table diagnosis(
+MedID number not null,
+Patientname varchar2(100),
+Diagnosis varchar2(100),
+Medicine varchar2(100),
+Quantity varchar2(100),
+Ward varchar2(4),
+ID number not null,
+CONSTRAINT fk_medid FOREIGN KEY(ID) references patient(ID),
+CONSTRAINT diagnosis_pk PRIMARY KEY(MedID)
+);
+
+
+//ROOM
+create table room(
+RoomID number not null,
+roomtype varchar2(32),
+patientname varchar2(32),
+ad_date varchar2(32),
+ID number not null,
+MedID not null,
+CONSTRAINT fk_roomid FOREIGN KEY(MedID) references diagnosis(MedID),
+CONSTRAINT fk_room FOREIGN KEY(ID) references patient(ID)
+);
+
+
+//MEDICINE
+create table medicine (medname varchar2(50) not null,rupees number not null,CONSTRAINT medicine_pk PRIMARY KEY(medname));
+insert into medicine values('Dolo',5);
+insert into medicine values('Paracetamol',3);
+insert into medicine values('Eldopher',2);
+insert into medicine values('Amlong',6);
+insert into medicine values('Erythromycin',10);
+insert into medicine values('Evion',3);
+insert into medicine values('Aciloc',1);
+insert into medicine values('Wysolene',4);
+insert into medicine values('Pantocid',9);
+insert into medicine values('Carnisure',15);
+insert into medicine values('Snepdol',7);
+insert into medicine values('Dulotin',9);
+insert into medicine values('Prothiaden',7);
+insert into medicine values('Gabarich',11);
+insert into medicine values('Deriphyllin',19);
+insert into medicine values('Vent',1);
+
+//PHARMACY
+create table pharmacy (
+billid number not null primary key,
+id number not null,
+bill number,
+CONSTRAINT fk_pharmacy FOREIGN KEY(ID) references patient(ID)
+);
+
+//ADMIN
+ create table admin(id varchar(10),name varchar(15),email varchar(25),password varchar(15));
+ insert into admin(id,name,email,password) values('GHSH123','Veera','veera4721','abc123');
+ insert into admin(id,name,email,password) values('GHSH324','Sara','saramhd@gmail.com','ABcd@1111');
+
